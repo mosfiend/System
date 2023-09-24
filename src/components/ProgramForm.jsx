@@ -1,53 +1,107 @@
-import { useState } from 'react'
+import {useState} from 'react'
+import {Text, HStack, Box, Input, useRadioGroup,useCheckboxGroup } from '@chakra-ui/react';
+import RadioCard from './RadioCard.jsx';
+import CheckCard from './CheckCard.jsx';
 
-const ProgramForm = ({ setSplit }) => {
+const ProgramForm = ({setSplit}) => {
+    const equipmentNames = [
+        "Pull up bar",
+        "None",
+        "Dumbbells",
+        "Full gym equipment",
+    ];
+    const splitNames = [
+        "Upper/Lower Body",
+        "Push/Pull/Legs",
+        "Full Body",
+        "Body part",
+        "Upper/Lower/Full Body",
+        "Push/Pull/Legs/Full Body",
+        "Custom",
+    ];
 
-  const [moreSplits, setMoreSplits] = useState(true)
-  const [equipment, setEquipment] = useState({
-    "pullup": false,
-    "dumbbell": false,
-    "compound": false
-  })
-  const availability = (item) => {
-    let obj = { ...equipment }
-    obj[item] = !obj[item]
-    setEquipment(obj)
-  }
-  const makePlan = (type) => {
-    setSplit(type)
-  }
+    const splitsArray = [
+        ["Upper Body", "Lower Body"],
+        ["Push", "Pull", "Legs"],
+        ["Full Body"],
+        ["Chest", "Back", "Legs", "Shoulders", "Arms"],
+        ["Upper Body", "Lower Body", "Full Body"],
+        ["Push", "Pull", "Legs", "Full Body"],
+        [], // Empty array for the "Custom" option
+    ];
+    const { getRootProps, getRadioProps } = useRadioGroup({
+        name: 'split',
+        defaultValue: 'Upper/Lower Body',
+        onChange:()=>{
+            makePlan(splitsArray[idx],idx)
+        }
+    })
+    const group = getRootProps()
+    const { value, getCheckboxProps } = useCheckboxGroup({
+        defaultValue: ['pullup'],
+    })
+    const [idx, setIdx] = useState(0)
+    const [moreSplits,setMoreSplits] = useState(true)
+    const [equipment,setEquipment]=  useState({
+        "pullup":false,
+        "dumbbell":false,
+        "compound":false
+    })
+    const availability = (item) => {
+        let obj = {...equipment}
+        obj[item]=!obj[item]
+        setEquipment(obj)
+    }
+    const makePlan = (type) => {
+        setSplit(type)    
+    }
 
-  return (
+    return (
+        <Box >
 
+            <HStack >
+                <Text>
+                    Equipment at your disposal
+                </Text>
+                {
+                    equipmentNames.map((value,i)=>{
+                        const radio = getRadioProps({ value })
+                        return  <Box
+                            key={i}
+                            onClick={()=>{setIdx(i) }}
+                        >
+                            <CheckCard
+                                {...getCheckboxProps({value:value})}
+                            >
+                                {value}
+                            </CheckCard>  
+                        </Box>  
+                    })
+                }
+            </HStack>
 
-    <div className="form grid">
-      <form className="grid" >
+            <Text>Choose your split 
+            </Text>
+            <HStack {...group}>
+                {
+                    splitNames.map((value,i)=>{
+                        const radio = getRadioProps({ value })
+                        return  <Box
+                            key={i}
+                            onClick={()=>{setIdx(i) }}
+                        >
+                            <RadioCard
+                                {...radio}
+                            >
+                                {value}
+                            </RadioCard>  
+                        </Box>  
+                    })
+                }
+            </HStack>
 
-        <div>
-          <label>Equipment at your disposal</label>
-          <label ><input onChange={() => availability("pullup")} type="checkbox" name="equipment" /><span className="multi-choice">Pull up bar</span></label>
-          <label ><input onChange={() => availability("pullup")} type="checkbox" name="equipment" /><span className="multi-choice">None</span></label>
-          <label ><input onChange={() => availability("dumbbell")} type="checkbox" name="equipment" /><span className="multi-choice">Dumbbells</span></label>
-          <label ><input onChange={() => availability("compound")} type="checkbox" name="equipment" /><span className="multi-choice">Full gym equipment</span></label>
-        </div>
-        <div>
-          <label>Choose your split</label>
-          <label ><input onChange={() => makePlan(["Upper Body", "Lower Body"])} type="radio" name="split" /><span className="multi-choice">Upper - Lower Body</span></label>
-          <label ><input onChange={() => makePlan(["Push", "Pull", "Legs"])} type="radio" name="split" /><span className="multi-choice">Push-Pull-Legs</span></label>
-          <label ><input type="radio" name="split" /><span className="multi-choice">Full Body</span></label>
-          <label ><input onChange={() => makePlan(["Chest", "Back", "Legs", "Shoulders", "Arms"])} type="radio" name="split" /><span className="multi-choice">Bodypart Split</span></label>
-          {moreSplits ? <span className="multi-choice" onClick={() => setMoreSplits(false)}><b>. . .</b></span> : <>
-            <label ><input onChange={() => makePlan(["Upper Body", "Lower Body", "Full Body"])} type="radio" name="split" /><span className="multi-choice">Upper-Lower-Full Body</span></label>
-            <label ><input onChange={() => makePlan(["Push", "Pull", "Legs", "Full Body"])} type="radio" name="split" /><span className="multi-choice">PPL-Fully Body</span></label>
-            <label ><input onChange={() => makePlan([])} type="radio" name="split" /><span className="multi-choice">Custom</span></label> </>
-          }
-
-        </div>
-
-      </form>
-
-    </div>
-  )
+        </Box>
+    )
 }
 
 export default ProgramForm

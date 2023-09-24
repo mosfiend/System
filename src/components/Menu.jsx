@@ -1,11 +1,11 @@
-import { Grid,Box, Button, Text} from '@chakra-ui/react';
+import { VStack, Box, Button, Text} from '@chakra-ui/react';
 const Menu = ({setStep}) => {
     const move = (page)=> {
         setStep(page)
     }
 
     return (
-        <Grid>
+        <VStack>
                 <Box>
             <Button onClick={()=>move(2)}>
                 <Text>
@@ -28,8 +28,7 @@ const Menu = ({setStep}) => {
                 </Text>
             </Button>
                 </Box>
-
-        </Grid>
+        </VStack>
     )
 }
 

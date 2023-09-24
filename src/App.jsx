@@ -10,39 +10,40 @@ function App() {
     const [split,setSplit] = useState([])
 
     return (
-        <Box>
+        <Flex alignItems="center" w="80vw" flexDirection="column">
             <Box>
                 <Heading as="h1" fontSize="4xl">Workout Planner</Heading>
             </Box>
             <Box>
-                {step===""?
-                    <Menu  setStep={setStep}/>
-                    :step===2 ?
-                        <Box>
-                            <Heading>
-                                Workout Customization
-                            </Heading>
-                            <Button onClick={()=>setStep("")}>
-                                <Text>
-                                    Back to Menu
-                                </Text>
-                            </Button>
+                {
+                    step===""
+                        ? <Menu  setStep={setStep}/>
+                        :step===2 ?
+                            <Box>
+                                <Heading>
+                                    Workout Cukstomization
+                                </Heading>
+                                <Button onClick={()=>setStep("")}>
+                                    <Text>
+                                        Back to Menu
+                                    </Text>
+                                </Button>
 
-                            <Session  setStep={setStep} split={split} exercises={exercises} setExercises={setExercises}/>
-                        </Box>
-                        :
-                        <Box>
-                            <Heading>Choose Your Workout Plan
-                            </Heading>
-                            <Button onClick={()=>setStep("")}>
-                                <Text>Back to Menu
-                                </Text>
-                            </Button>
-                            <Program setStep={setStep} setSplit={setSplit}/>
-                        </Box>
+                                <Session  setStep={setStep} split={split} exercises={exercises} setExercises={setExercises}/>
+                            </Box>
+                            :
+                            <Box>
+                                <Heading>Choose Your Workout Plan
+                                </Heading>
+                                <Button onClick={()=>setStep("")}>
+                                    <Text>Back to Menu
+                                    </Text>
+                                </Button>
+                                <Program setStep={setStep} setSplit={setSplit}/>
+                            </Box>
                 }
             </Box>
-        </Box>
+        </Flex>
     );
 }
 
