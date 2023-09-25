@@ -27,7 +27,7 @@ const ExerciseForm = (                /*form*/ {crudExercise,routine,setRoutine,
             </Box >
             <Box >
           <FormControl isRequired>
-                    <Input   onChange={handleChange}
+                    <Input onChange={handleChange}
                         id="reps"
                         value={reps}
                         type="number"
@@ -38,7 +38,7 @@ const ExerciseForm = (                /*form*/ {crudExercise,routine,setRoutine,
             </Box >
             <Box >
           <FormControl>
-                    <Input   onChange={handleChange}
+                    <Input onChange={handleChange}
                         id="sets"
                         value={sets}
                         type="number"

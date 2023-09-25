@@ -1,12 +1,11 @@
-import {useState} from 'react'
-import {Text, HStack, Box, Input, useRadioGroup,useCheckboxGroup } from '@chakra-ui/react';
+import {useState,useEffect} from 'react'
+import {Text, HStack, Box, useRadioGroup,useCheckboxGroup } from '@chakra-ui/react';
 import RadioCard from './RadioCard.jsx';
 import CheckCard from './CheckCard.jsx';
 
 const ProgramForm = ({setSplit}) => {
     const equipmentNames = [
         "Pull up bar",
-        "None",
         "Dumbbells",
         "Full gym equipment",
     ];
@@ -38,7 +37,7 @@ const ProgramForm = ({setSplit}) => {
     })
     const group = getRootProps()
     const { value, getCheckboxProps } = useCheckboxGroup({
-        defaultValue: ['pullup'],
+        defaultValue: [],
     })
     const [idx, setIdx] = useState(0)
     const [moreSplits,setMoreSplits] = useState(true)
@@ -61,19 +60,18 @@ const ProgramForm = ({setSplit}) => {
 
             <HStack >
                 <Text>
-                    Equipment at your disposal
+                    Equipment at your disposal: 
                 </Text>
                 {
-                    equipmentNames.map((value,i)=>{
-                        const radio = getRadioProps({ value })
+                    equipmentNames.map((equipment,i)=>{
                         return  <Box
                             key={i}
                             onClick={()=>{setIdx(i) }}
                         >
                             <CheckCard
-                                {...getCheckboxProps({value:value})}
+                                {...getCheckboxProps({value:equipment})}
                             >
-                                {value}
+                                {equipment}
                             </CheckCard>  
                         </Box>  
                     })

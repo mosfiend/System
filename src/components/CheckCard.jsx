@@ -10,6 +10,8 @@ const CheckCard = (props) => {
       <Box
         {...checkbox}
                 bg={state.isChecked ?'green.500':'green.50'}        
+color={state.isChecked && "white"}
+          
         cursor='pointer'
         borderWidth='1px'
         borderRadius='md'
