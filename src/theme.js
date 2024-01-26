@@ -6,8 +6,9 @@ const theme = extendTheme({
       baseStyle: {
         background: "green.50",
       },
-    },
+    } ,
   },
+
   styles: {
     global: () => ({
       body: {
